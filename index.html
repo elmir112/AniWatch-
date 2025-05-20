@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AniWatch</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <h1>AniWatch</h1>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="video-section">
+      <video id="animePlayer" controls preload="metadata">
+        <source src="aot_s1e1_eng_dub.mp4" type="video/mp4" label="English Dub" />
+        <track label="Türkçe Altyazı" kind="subtitles" srclang="tr" src="aot_s1e1_tr.vtt" default>
+        <track label="English Subtitles" kind="subtitles" srclang="en" src="aot_s1e1_en.vtt">
+        Your browser does not support the video tag.
+      </video>
+
+      <div class="controls">
+        <button onclick="seek(-10)">⏪ 10s</button>
+        <button onclick="seek(10)">10s ⏩</button>
+        <label for="volume">Səs:</label>
+        <input type="range" id="volume" min="0" max="1" step="0.1" onchange="changeVolume(this.value)" />
+      </div>
+    </section>
+
+    <section class="comments">
+      <h2>Rəylər</h2>
+      <textarea placeholder="Fikirlərini yaz..." rows="4"></textarea>
+      <button>Göndər</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© AniWatch | Sadəcə anime izləmək üçün</p>
+  </footer>
+
+  <script>
+    const player = document.getElementById('animePlayer');
+
+    function seek(seconds) {
+      player.currentTime += seconds;
+    }
+
+    function changeVolume(value) {
+      player.volume = value;
+    }
+
+    // Simple 5s ad simulation before play
+    player.addEventListener('play', () => {
+      if (!player.dataset.adPlayed) {
+        player.pause();
+        alert("5 saniyəlik reklam...");
+        setTimeout(() => {
+          player.play();
+          player.dataset.adPlayed = true;
+        }, 5000);
+      }
+    });
+  </script>
+</body>
+</html>
